@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Portico Email Generator</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="app">
+  <div class="app-header">
+    <h2>Portico email generator</h2>
+    <p>Fill in the fields below, preview, then save the finished HTML file.</p>
+  </div>
+
+  <div class="card">
+    <label class="field-label" for="templateSelect">Template</label>
+    <select id="templateSelect" onchange="onTemplateChange()"></select>
+    <p class="hint">Choose the email layout. More templates can be added by dropping a file into <code>templates/</code>.</p>
+  </div>
+
+  <div class="card">
+    <div class="two-col">
+      <div>
+        <label class="field-label" for="preheaderText">Preheader text</label>
+        <input type="text" id="preheaderText" placeholder="e.g. Sign in to myPortico to view details.">
+        <p class="hint">Hidden preview line shown in email clients.</p>
+      </div>
+      <div style="max-width:140px;">
+        <label class="field-label" for="projectCode">Project code</label>
+        <input type="text" id="projectCode" placeholder="e.g. 22-8422" oninput="updateFilename()">
+        <p class="hint">Used in filename and shown bottom-right.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <label class="field-label" for="emailTitle">Email title <span style="font-weight:400;color:#999;">(optional)</span></label>
+    <input type="text" id="emailTitle" placeholder="e.g. Confirmation of Completed Coverage Update">
+  </div>
+
+  <div class="card">
+    <label class="field-label">Email body</label>
+    <div class="rich-editor-wrap">
+      <div class="rich-toolbar">
+        <button onmousedown="event.preventDefault()" onclick="fmt('bold','editor1')"><strong>B</strong></button>
+        <button onmousedown="event.preventDefault()" onclick="fmt('italic','editor1')"><em>I</em></button>
+        <button onmousedown="event.preventDefault()" onclick="fmt('underline','editor1')"><u>U</u></button>
+        <div class="sep"></div>
+        <button onmousedown="event.preventDefault()" onclick="addLink('editor1')">+ Link</button>
+        <button onmousedown="event.preventDefault()" onclick="fmt('unlink','editor1')">Unlink</button>
+      </div>
+      <div class="rich-editor" id="editor1" contenteditable="true"
+           data-placeholder="Paste your text from Word here..." data-empty="true"></div>
+    </div>
+    <p class="hint">Paste directly from Word — bold, italic, underline, and links are preserved. "myPortico", "EmployerLink", and "medicare.gov" are auto-linked.</p>
+
+    <div class="link-dialog" id="linkDialog" hidden>
+      <div class="section-sub">Add link</div>
+      <input type="text" id="linkUrlInput" placeholder="https://...">
+      <input type="text" id="linkLabelInput" placeholder="Display text (optional)">
+      <div class="link-dialog-buttons">
+        <button type="button" onclick="confirmAddLink()">Add</button>
+        <button type="button" class="secondary" onclick="cancelAddLink()">Cancel</button>
+      </div>
+    </div>
+
+    <div class="detected-wrap" id="detectedWrap" style="display:none;">
+      <div class="section-sub">Links found — toggle to include or exclude</div>
+      <div id="detectedList"></div>
+    </div>
+  </div>
+
+  <div id="statusMsg" class="status-msg" hidden></div>
+  <button class="generate-btn" onclick="generate()">Preview &amp; generate email</button>
+
+  <div id="previewWrap" style="display:none;">
+    <div style="font-size:13px;font-weight:500;color:#666;margin:1rem 0 8px;">Preview</div>
+    <div class="preview-frame"><iframe id="previewFrame"></iframe></div>
+    <button class="save-btn" id="saveBtn" onclick="saveFile()">Save HTML file</button>
+    <div class="filename-display" id="filenameDisplay"></div>
+  </div>
+</div>
+
+<script src="templates/portico-mp.js"></script>
+<script src="templates/portico-employerlink.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
