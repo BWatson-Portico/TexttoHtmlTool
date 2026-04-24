@@ -97,11 +97,14 @@ function cancelAddLink() {
 function getInlineFormatting(el) {
   const style = el.getAttribute('style') || '';
   const colorMatch = /(?:^|;)\s*color\s*:\s*([^;]+)/i.exec(style);
+  const bgMatch = /(?:^|;)\s*background(?:-color)?\s*:\s*([^;]+)/i.exec(style);
+  const msoHighlight = /mso-highlight\s*:\s*([^;]+)/i.exec(style);
   return {
     bold:      /font-weight\s*:\s*(bold|[6-9]00)/i.test(style),
     italic:    /font-style\s*:\s*italic/i.test(style),
     underline: /text-decoration[^;]*:\s*[^;]*underline/i.test(style),
     color:     colorMatch ? colorMatch[1].trim() : null,
+    background: bgMatch ? bgMatch[1].trim() : (msoHighlight ? msoHighlight[1].trim() : null),
   };
 }
 
@@ -117,12 +120,20 @@ function isMeaningfulColor(c) {
            'rgb(0,0,0)','rgb(17,17,17)','rgb(34,34,34)','rgb(51,51,51)','rgb(84,88,89)'
           ].includes(n);
 }
+function isMeaningfulBackground(c) {
+  if (!c) return false;
+  const n = c.toLowerCase().replace(/\s/g, '');
+  return !['inherit','transparent','initial','currentcolor','auto','none',
+           '#fff','#ffffff','white','rgb(255,255,255)'
+          ].includes(n);
+}
 function wordNodeToCleanHtml(node, inherited) {
   inherited = inherited || { bold: false, italic: false, underline: false };
   if (node.nodeType === 3) {
     let text = escapeHtml(node.textContent);
     if (!text.trim()) return text;
     if (isMeaningfulColor(inherited.color) && !inherited.isLink) text = `<span style="color:${inherited.color}">${text}</span>`;
+    if (isMeaningfulBackground(inherited.background)) text = `<span style="background-color:${inherited.background}">${text}</span>`;
     if (inherited.bold)                         text = `<strong>${text}</strong>`;
     if (inherited.italic)                        text = `<em>${text}</em>`;
     if (inherited.underline && !inherited.isLink) text = `<u>${text}</u>`;
@@ -144,6 +155,7 @@ function wordNodeToCleanHtml(node, inherited) {
     italic: inherited.italic || f.italic,
     underline: inherited.underline || f.underline,
     color: f.color || inherited.color,
+    background: f.background || inherited.background,
     isLink: inherited.isLink,
     inList: inherited.inList || tag === 'ul' || tag === 'ol' || tag === 'li',
   };
@@ -410,10 +422,12 @@ function domToEmailHtml(node, inList) {
   }
   if (tag === 'span') {
     const style = node.getAttribute('style') || '';
-    const m = /(?:^|;)\s*color\s*:\s*([^;]+)/i.exec(style);
-    if (m && isMeaningfulColor(m[1].trim())) {
-      return `<span style="color:${m[1].trim()}">${children}</span>`;
-    }
+    const colorM = /(?:^|;)\s*color\s*:\s*([^;]+)/i.exec(style);
+    const bgM = /(?:^|;)\s*background(?:-color)?\s*:\s*([^;]+)/i.exec(style);
+    const parts = [];
+    if (colorM && isMeaningfulColor(colorM[1].trim())) parts.push(`color:${colorM[1].trim()}`);
+    if (bgM && isMeaningfulBackground(bgM[1].trim())) parts.push(`background-color:${bgM[1].trim()}`);
+    if (parts.length) return `<span style="${parts.join(';')}">${children}</span>`;
     return children;
   }
   if (tag === 'p' || tag === 'div') {
@@ -469,7 +483,7 @@ function buildHTML() {
   return template.build({
     preheader:   document.getElementById('preheaderText').value.trim(),
     projectCode: document.getElementById('projectCode').value.trim(),
-    title:       document.getElementById('emailTitle').value.trim(),
+    title:       '',
     bodyHtml:    editorToEmailHtml(),
   });
 }
