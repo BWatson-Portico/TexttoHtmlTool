@@ -1,6 +1,10 @@
 // Template registry — populated by files in templates/ loaded before this script.
 window.EMAIL_TEMPLATES = window.EMAIL_TEMPLATES || [];
 
+// Appended to every email body, after the user's content. Edit the string below to change.
+// Leave as '' to disable.
+const BODY_FOOTER_HTML = '<p style="margin:10px 0 0 0!important;padding:0!important;font-size:13px;font-weight:bold;">To protect your privacy, we encourage the use of encryption when sending confidential information and attachments via email. Most email providers utilize TLS encryption by default. If you are unsure whether your email provider encrypts your outbound messages, please check with them to be sure.</p>';
+
 const KNOWN_LINKS = [
   { pattern: /_{0,2}myPortico_{0,2}/gi,      label: 'myPortico',    url: 'https://myportico.porticobenefits.org' },
   { pattern: /_{0,2}EmployerLink_{0,2}/gi,   label: 'EmployerLink', url: 'https://employerlink.porticobenefits.org' },
@@ -484,7 +488,7 @@ function buildHTML() {
     preheader:   document.getElementById('preheaderText').value.trim(),
     projectCode: document.getElementById('projectCode').value.trim(),
     title:       '',
-    bodyHtml:    editorToEmailHtml(),
+    bodyHtml:    editorToEmailHtml() + BODY_FOOTER_HTML,
   });
 }
 
