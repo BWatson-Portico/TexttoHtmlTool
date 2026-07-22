@@ -23,12 +23,12 @@
   <div class="card">
     <div class="two-col">
       <div>
-        <label class="field-label" for="preheaderText">Preheader text</label>
+        <label class="field-label" for="preheaderText">Preheader text <span class="optional">(optional)</span></label>
         <input type="text" id="preheaderText" placeholder="e.g. Sign in to myPortico to view details.">
         <p class="hint">Hidden preview line shown in email clients.</p>
       </div>
       <div style="max-width:140px;">
-        <label class="field-label" for="projectCode">Project code</label>
+        <label class="field-label" for="projectCode">Project code <span class="optional">(optional)</span></label>
         <input type="text" id="projectCode" placeholder="e.g. 22-8422" oninput="updateFilename()">
         <p class="hint">Used in filename and shown bottom-right.</p>
       </div>
@@ -67,6 +67,19 @@
     <div class="detected-wrap" id="detectedWrap" style="display:none;">
       <div class="section-sub">Links found — toggle to include or exclude</div>
       <div id="detectedList"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="footer-toggle-row">
+      <div>
+        <label class="field-label" for="footerToggle">Email footer</label>
+        <p class="hint" style="margin-top:0;">Includes the "To protect your privacy&hellip;" notice, the "Have any questions?" contact block, Portico branding, legal links, copyright, and confidentiality disclaimer. Turn off to send just the body and project code.</p>
+      </div>
+      <label class="toggle">
+        <input type="checkbox" id="footerToggle" checked onchange="onFooterToggleChange()">
+        <span class="slider"></span>
+      </label>
     </div>
   </div>
 

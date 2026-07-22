@@ -1,9 +1,22 @@
 // Template registry — populated by files in templates/ loaded before this script.
 window.EMAIL_TEMPLATES = window.EMAIL_TEMPLATES || [];
 
-// Appended to every email body, after the user's content. Edit the string below to change.
-// Leave as '' to disable.
+// Appended to the email body, after the user's content, when the "Privacy footer"
+// toggle is on. Edit the string below to change the text.
 const BODY_FOOTER_HTML = '<p style="margin:10px 0 0 0!important;padding:0!important;font-size:13px;font-weight:bold;">To protect your privacy, we encourage the use of encryption when sending confidential information and attachments via email. Most email providers utilize TLS encryption by default. If you are unsure whether your email provider encrypts your outbound messages, please check with them to be sure.</p>';
+
+// Whether the email footer is currently enabled (driven by the UI toggle).
+// Controls the "To protect your privacy" notice plus the entire template footer:
+// the "Have any questions?" contact block, Portico branding, legal links,
+// copyright line, and confidentiality disclaimer. The project code always remains.
+function includeFooter() {
+  const cb = document.getElementById('footerToggle');
+  return cb ? cb.checked : true;
+}
+// Re-render the preview when the toggle changes, if one has already been generated.
+function onFooterToggleChange() {
+  if (lastHTML) generate();
+}
 
 const KNOWN_LINKS = [
   { pattern: /_{0,2}myPortico_{0,2}/gi,      label: 'myPortico',    url: 'https://myportico.porticobenefits.org' },
@@ -22,7 +35,7 @@ function escapeAttr(s) {
   return String(s).replace(/"/g,'&quot;');
 }
 function makeEmailAnchor(url, label) {
-  return `<a href="${escapeAttr(url)}" target="_blank" style="text-decoration:none;font-weight:normal;color:#000000;"><span style="text-decoration:underline;color:#009cde;">${label}</span></a>`;
+  return `<a href="${escapeAttr(url)}" target="_blank" style="text-decoration:none;font-weight:normal;color:#000000;"><span style="text-decoration:underline;color:#007AAF;">${label}</span></a>`;
 }
 // Expose for template files
 window.escapeHtml = escapeHtml;
@@ -87,7 +100,7 @@ function confirmAddLink() {
     sel.addRange(pendingLinkRange);
   }
   document.execCommand('insertHTML', false,
-    `<a href="${escapeAttr(url)}" style="color:#009cde;text-decoration:underline;">${escapeHtml(label)}</a>`);
+    `<a href="${escapeAttr(url)}" style="color:#007AAF;text-decoration:underline;">${escapeHtml(label)}</a>`);
   cancelAddLink();
 }
 function cancelAddLink() {
@@ -484,11 +497,13 @@ function onTemplateChange() {
 function buildHTML() {
   const template = getSelectedTemplate();
   if (!template) { showStatus('No email template is available.'); return ''; }
+  const footer = includeFooter();
   return template.build({
     preheader:   document.getElementById('preheaderText').value.trim(),
     projectCode: document.getElementById('projectCode').value.trim(),
     title:       '',
-    bodyHtml:    editorToEmailHtml() + BODY_FOOTER_HTML,
+    bodyHtml:    editorToEmailHtml() + (footer ? BODY_FOOTER_HTML : ''),
+    includeFooter: footer,
   });
 }
 

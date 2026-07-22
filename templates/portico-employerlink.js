@@ -17,6 +17,68 @@ window.EMAIL_TEMPLATES.push({
 </td>
 </tr>` : '';
 
+    // Optional footer: contact block, branding, legal links, copyright, confidentiality.
+    // Hidden when the "Email footer" toggle is off. The project code below always remains.
+    const footerSection = fields.includeFooter ? `
+<tr e-repeatable-item e-block-id="69c426c8aa6f7458f700000a">
+<td colspan="2" height="2" bgcolor="#f1c300" style="height: 2px; line-height: 2px;">&nbsp;</td>
+</tr>
+<tr e-repeatable-item style="margin-top: 20px; margin-bottom: 20px" e-block-id="69c427d0195ff8dcfc000004">
+<td colspan="2">
+<table style="margin-top:20px; margin-bottom:20px">
+<tr>
+<td class="rw100" width="100%" valign="top" style="padding:0px 10px 0px 10px;">
+<p e-editable="Bodycopy_Text1_v2" style="font-family: Arial, Helvetica, sans-serif; font-size: 14px; line-height: 1.4; color: #545859; margin: 0 !important; padding: 0 !important;"><span style="font-size: 16px;"><strong>Have any questions?</strong></span><br><span style="font-size: 16px;"> Portico Customer Care Center</span><br><span style="font-size: 16px;"> <strong>800.352.2876</strong></span><br><span style="font-size: 16px;"> <a href="mailto:mail@PorticoBenefits.org" target="_blank" rel="noopener" style="text-decoration: none; font-weight: normal; color: #000000;"><span style="font-family: helvetica, sans-serif; color: #009cde;"><u>mail@PorticoBenefits.org</u></span></a></span></p>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr e-repeatable-item e-block-id="6924beabe342744559000004">
+<td colspan="2" height="2" bgcolor="#51575a" style="height: 2px; line-height: 2px;"></td>
+</tr>
+<tr e-block-id="69cc2731e78e182e97000004">
+<td align="center" style="padding: 0px 10px 0px 10px; margin: 0" colspan="2">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" style="font-family: helvetica, sans-serif; font-size:14px; line-height:18px; color:#545859;">
+<tr>
+<td align="left" style="padding: 10px 10px 3px 0px">
+<img e-editable="logo_imgVV1" src="https://suite42.emarsys.net/custloads/837681541/md_435523.png" width="55" height="46" alt="Portico Arch Logo" style="display: block">
+</td>
+</tr>
+<tr>
+<td align="left" style="padding: 3px 0">
+<a e-editable="logo_link2" href="https://www.elca.org/" target="_blank" style="font-weight: normal; color: #000000; text-decoration: none;">
+<p e-editable="ministry_block1" style="font-size: 16px; color: #565a5c; text-decoration: none; margin: 0 !important; padding: 0 !important;">A Ministry of the ELCA</p>
+</a>
+</td>
+</tr>
+<tr>
+<td align="left" style="padding: 5px 0">
+<p e-editable="links_block3" style="margin: 0 !important; padding: 0 !important;"><a href="https://employerlink.porticobenefits.org/terms-conditions" target="_blank" style="font-weight: normal; font-size: 11px; color: #565a5c; text-decoration: underline;" rel="noopener">Terms &amp; Conditions</a> <span style="color: #565a5c;">&nbsp;|&nbsp;</span> <a href="https://employerlink.porticobenefits.org/privacy" target="_blank" style="font-weight: normal; font-size: 11px; color: #565a5c; text-decoration: underline;" rel="noopener">Privacy &amp; Legal Notices</a></p>
+</td>
+</tr>
+<tr>
+<td style="padding: 5px 10px 0px 0px; font-size: 11px; line-height:16px;" e-editable="footertext55">&#xa9; Portico Benefit Services, 7700 France Ave. S., Ste. 350, Minneapolis, MN 55435-2802. All rights reserved. Please visit <a href="https://employerlink.porticobenefits.org/" target="_blank" style="font-weight: normal; font-size: 11px; color: #565a5c; text-decoration: underline;" rel="noopener">EmployerLink</a> to learn more.</td>
+</tr>
+</table>
+<table data-type="text" border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed">
+<tbody>
+<tr>
+<td style="padding: 5px 10px 3px 0px; line-height:15px; text-align: inherit;" height="100%" valign="top" bgcolor>
+<div>
+<div style="font-family: inherit; text-align: inherit" e-editable="footertextv88">
+<span style="font-family: helvetica, sans-serif; font-size: 11px; color: #545859;">This message and any attachments may contain information that is private/confidential, the disclosure of which is protected by applicable law. If you are not the intended recipient, you are hereby notified that any dissemination, distribution, copying or other use of this message is strictly prohibited. If you are not the intended recipient of this message, please immediately delete all copies of this message and its attachments and notify the sender of its inadvertent transmission. Thank you.</span>
+</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<p style="margin: 0 !important; padding: 0 !important;"></p>
+<div></div>
+</td>
+</tr>` : '';
+
     return `<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"><html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" lang="en-US" e-locale="en-US" e-is-multilanguage="false">
 <head>
 <title>Portico Benefit Services</title>
@@ -225,70 +287,13 @@ ${titleSection}
 <tr e-block-id="69c426ddaa6f7458f700000b">
 <td bgcolor="#ffffff" height="30" class="rh30"><div></div></td>
 </tr>
-<tr e-repeatable-item e-block-id="69c426c8aa6f7458f700000a">
-<td colspan="2" height="2" bgcolor="#f1c300" style="height: 2px; line-height: 2px;">&nbsp;</td>
-</tr>
-<tr e-repeatable-item style="margin-top: 20px; margin-bottom: 20px" e-block-id="69c427d0195ff8dcfc000004">
-<td colspan="2">
-<table style="margin-top:20px; margin-bottom:20px">
-<tr>
-<td class="rw100" width="100%" valign="top" style="padding:0px 10px 0px 10px;">
-<p e-editable="Bodycopy_Text1_v2" style="font-family: Arial, Helvetica, sans-serif; font-size: 14px; line-height: 1.4; color: #545859; margin: 0 !important; padding: 0 !important;"><span style="font-size: 16px;"><strong>Have any questions?</strong></span><br><span style="font-size: 16px;"> Portico Customer Care Center</span><br><span style="font-size: 16px;"> <strong>800.352.2876</strong></span><br><span style="font-size: 16px;"> <a href="mailto:mail@PorticoBenefits.org" target="_blank" rel="noopener" style="text-decoration: none; font-weight: normal; color: #000000;"><span style="font-family: helvetica, sans-serif; color: #009cde;"><u>mail@PorticoBenefits.org</u></span></a></span></p>
-</td>
-</tr>
-</table>
-</td>
-</tr>
-<tr e-repeatable-item e-block-id="6924beabe342744559000004">
-<td colspan="2" height="2" bgcolor="#51575a" style="height: 2px; line-height: 2px;"></td>
-</tr>
-<tr e-block-id="69cc2731e78e182e97000004">
-<td align="center" style="padding: 0px 10px 0px 10px; margin: 0" colspan="2">
-<table width="100%" border="0" cellspacing="0" cellpadding="0" style="font-family: helvetica, sans-serif; font-size:14px; line-height:18px; color:#545859;">
-<tr>
-<td align="left" style="padding: 10px 10px 3px 0px">
-<img e-editable="logo_imgVV1" src="https://suite42.emarsys.net/custloads/837681541/md_435523.png" width="55" height="46" alt="Portico Arch Logo" style="display: block">
-</td>
-</tr>
-<tr>
-<td align="left" style="padding: 3px 0">
-<a e-editable="logo_link2" href="https://www.elca.org/" target="_blank" style="font-weight: normal; color: #000000; text-decoration: none;">
-<p e-editable="ministry_block1" style="font-size: 16px; color: #565a5c; text-decoration: none; margin: 0 !important; padding: 0 !important;">A Ministry of the ELCA</p>
-</a>
-</td>
-</tr>
-<tr>
-<td align="left" style="padding: 5px 0">
-<p e-editable="links_block3" style="margin: 0 !important; padding: 0 !important;"><a href="https://employerlink.porticobenefits.org/terms-conditions" target="_blank" style="font-weight: normal; font-size: 11px; color: #565a5c; text-decoration: underline;" rel="noopener">Terms &amp; Conditions</a> <span style="color: #565a5c;">&nbsp;|&nbsp;</span> <a href="https://employerlink.porticobenefits.org/privacy" target="_blank" style="font-weight: normal; font-size: 11px; color: #565a5c; text-decoration: underline;" rel="noopener">Privacy &amp; Legal Notices</a></p>
-</td>
-</tr>
-<tr>
-<td style="padding: 5px 10px 0px 0px; font-size: 11px; line-height:16px;" e-editable="footertext55">&#xa9; Portico Benefit Services, 7700 France Ave. S., Ste. 350, Minneapolis, MN 55435-2802. All rights reserved. Please visit <a href="https://employerlink.porticobenefits.org/" target="_blank" style="font-weight: normal; font-size: 11px; color: #565a5c; text-decoration: underline;" rel="noopener">EmployerLink</a> to learn more.</td>
-</tr>
-</table>
-<table data-type="text" border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed">
-<tbody>
-<tr>
-<td style="padding: 5px 10px 3px 0px; line-height:15px; text-align: inherit;" height="100%" valign="top" bgcolor>
-<div>
-<div style="font-family: inherit; text-align: inherit" e-editable="footertextv88">
-<span style="font-family: helvetica, sans-serif; font-size: 11px; color: #545859;">This message and any attachments may contain information that is private/confidential, the disclosure of which is protected by applicable law. If you are not the intended recipient, you are hereby notified that any dissemination, distribution, copying or other use of this message is strictly prohibited. If you are not the intended recipient of this message, please immediately delete all copies of this message and its attachments and notify the sender of its inadvertent transmission. Thank you.</span>
-</div>
-</div>
-</td>
-</tr>
-</tbody>
-</table>
-<p style="margin: 0 !important; padding: 0 !important;"></p>
-<div></div>
-</td>
-</tr>
+${footerSection}
 <tr e-block-id="69c41cd16f3b6d3202000004">
 <td align="center" style="padding: 0; margin: 0" colspan="2">
 <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0" style="font-family:Arial, Helvetica, sans-serif; font-size:11px; line-height:1.4; color:#545859;">
 <tr>
 <td style="padding:3px 10px 3px 10px; line-height:15px; text-align:right;" height="100%" valign="top" bgcolor role="module-content" e-editable="footertextv15"><div>
-<div style="font-family: inherit; text-align: right;"><span style="font-family: helvetica, sans-serif; color: #545859; font-size: 10px;">${projectCode}</span></div>
+<div style="font-family: inherit; text-align: right;">${projectCode ? `<span style="font-family: helvetica, sans-serif; color: #545859; font-size: 10px;">${projectCode}</span>` : ''}</div>
 </div></td>
 </tr>
 </table>
