@@ -15,6 +15,8 @@ select { width: 100%; font-size: 14px; border: 0.5px solid #ccc; border-radius: 
 .rich-toolbar button { background: none; border: 0.5px solid transparent; border-radius: 4px; padding: 3px 8px; font-size: 13px; cursor: pointer; line-height: 1.4; }
 .rich-toolbar button:hover { background: #fff; border-color: #ccc; }
 .sep { width: 0.5px; background: #ddd; height: 16px; margin: 0 4px; }
+.rich-toolbar button.color-swatch { width: 22px; height: 22px; padding: 0; border: 1px solid rgba(0,0,0,0.25); border-radius: 4px; }
+.rich-toolbar button.color-swatch:hover { border-color: #333; }
 .rich-editor { min-height: 140px; padding: 10px 12px; font-size: 16px; font-family: helvetica, sans-serif; color: #545859; line-height: 1.6; outline: none; background: #fff; cursor: text; }
 .rich-editor[data-empty="true"]:before { content: attr(data-placeholder); color: #999; pointer-events: none; display: block; }
 .rich-editor a { color: #007AAF; text-decoration: underline; }

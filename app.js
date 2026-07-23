@@ -61,6 +61,18 @@ function fmt(cmd, editorId) {
   document.getElementById(editorId).focus();
   document.execCommand(cmd, false, null);
 }
+// Apply a brand color to the current selection as an inline <span style="color:…">.
+// styleWithCSS is toggled so the color is emitted as CSS (a span), not a <font> tag,
+// which carries through domToEmailHtml into the generated email. Passing the default
+// body gray (#545859) reads as "reset" — it's stripped at generate time (see isMeaningfulColor).
+function applyColor(color, editorId) {
+  const editor = document.getElementById(editorId);
+  editor.focus();
+  document.execCommand('styleWithCSS', false, true);
+  document.execCommand('foreColor', false, color);
+  document.execCommand('styleWithCSS', false, false);
+  updatePlaceholder(editor);
+}
 let pendingLinkRange = null;
 let pendingLinkEditor = null;
 
@@ -125,6 +137,13 @@ function getInlineFormatting(el) {
   };
 }
 
+// Browsers emit foreColor (and some pasted colors) as rgb(); normalize to hex so the
+// email matches the hex palette and the default-gray reset is recognized below.
+function rgbToHex(c) {
+  const m = /rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/i.exec(c || '');
+  if (!m) return (c || '').trim();
+  return '#' + [m[1], m[2], m[3]].map(n => Number(n).toString(16).padStart(2, '0')).join('');
+}
 function isMeaningfulColor(c) {
   if (!c) return false;
   const n = c.toLowerCase().replace(/\s/g, '');
@@ -442,7 +461,8 @@ function domToEmailHtml(node, inList) {
     const colorM = /(?:^|;)\s*color\s*:\s*([^;]+)/i.exec(style);
     const bgM = /(?:^|;)\s*background(?:-color)?\s*:\s*([^;]+)/i.exec(style);
     const parts = [];
-    if (colorM && isMeaningfulColor(colorM[1].trim())) parts.push(`color:${colorM[1].trim()}`);
+    const col = colorM ? rgbToHex(colorM[1].trim()) : null;
+    if (col && isMeaningfulColor(col)) parts.push(`color:${col}`);
     if (bgM && isMeaningfulBackground(bgM[1].trim())) parts.push(`background-color:${bgM[1].trim()}`);
     if (parts.length) return `<span style="${parts.join(';')}">${children}</span>`;
     return children;

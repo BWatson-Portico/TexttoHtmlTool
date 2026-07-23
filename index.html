@@ -48,11 +48,16 @@
         <div class="sep"></div>
         <button onmousedown="event.preventDefault()" onclick="addLink('editor1')">+ Link</button>
         <button onmousedown="event.preventDefault()" onclick="fmt('unlink','editor1')">Unlink</button>
+        <div class="sep"></div>
+        <button class="color-swatch" onmousedown="event.preventDefault()" onclick="applyColor('#001C41','editor1')" title="Navy text" style="background:#001C41;"></button>
+        <button class="color-swatch" onmousedown="event.preventDefault()" onclick="applyColor('#005A8B','editor1')" title="Dark Blue text" style="background:#005A8B;"></button>
+        <button class="color-swatch" onmousedown="event.preventDefault()" onclick="applyColor('#007AAF','editor1')" title="Medium Blue text" style="background:#007AAF;"></button>
+        <button onmousedown="event.preventDefault()" onclick="applyColor('#545859','editor1')" title="Reset selected text to the default color">Default</button>
       </div>
       <div class="rich-editor" id="editor1" contenteditable="true"
            data-placeholder="Paste your text from Word here..." data-empty="true"></div>
     </div>
-    <p class="hint">Paste directly from Word — bold, italic, underline, and links are preserved. "myPortico", "EmployerLink", and "medicare.gov" are auto-linked.</p>
+    <p class="hint">Paste directly from Word — bold, italic, underline, and links are preserved. "myPortico", "EmployerLink", and "medicare.gov" are auto-linked. To color text, select it and click a brand swatch (or "Default" to reset).</p>
 
     <div class="link-dialog" id="linkDialog" hidden>
       <div class="section-sub">Add link</div>
